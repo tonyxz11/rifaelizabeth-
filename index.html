@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rifa Elizabeth - Sorteio Beneficente</title>
+    <style>
+        /* Fontes de alto padrão importadas para um visual requintado */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-color: #050b14;
+            --navy-dark: #0a192f;
+            --navy-deep: #020c1b;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa820a;
+            --text-light: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: radial-gradient(circle at center, #0f1c2e 0%, #050b14 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 16px;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(145deg, rgba(15, 28, 48, 0.95), rgba(2, 12, 27, 0.98));
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 100px;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 18px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.1rem;
+            color: var(--gold-light);
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #fff 20%, var(--gold-light) 60%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .status-banner {
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            text-align: center;
+            padding: 0 12px;
+            background: rgba(2, 12, 27, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            width: 100%;
+        }
+
+        #status-text {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+            animation: pulse-status 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-status {
+            0%, 100% { opacity: 0.85; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 18px rgba(212, 175, 55, 0.8); }
+        }
+
+        .globe-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 10px auto 20px auto;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), rgba(2, 12, 27, 0.75) 70%),
+                        radial-gradient(circle at 70% 70%, rgba(10, 25, 47, 0.6), rgba(0, 0, 0, 0.9));
+            box-shadow: inset 0 0 35px rgba(255, 255, 255, 0.15),
+                        0 20px 40px rgba(0, 0, 0, 0.7),
+                        0 0 30px rgba(212, 175, 55, 0.2);
+            border: 2px solid rgba(212, 175, 55, 0.45);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .globe-reflection {
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            width: 90px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.02));
+            border-radius: 50%;
+            transform: rotate(-30deg);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .ball {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: radial-gradient(circle at 35% 35%, #ffffff, #dcdcdc 60%, #999999);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #020c1b;
+            box-shadow: inset -2px -2px 5px rgba(0,0,0,0.5), 0 3px 6px rgba(0,0,0,0.4);
+            user-select: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, box-shadow 0.3s ease;
+            z-index: 2;
+        }
+
+        .ball.highlighted {
+            background: radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold) 60%, var(--gold-dark)) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 25px var(--gold), inset -2px -2px 6px rgba(0,0,0,0.5) !important;
+            z-index: 20 !important;
+            transform: scale(1.45);
+        }
+
+        .results-section {
+            width: 100%;
+            margin-bottom: 22px;
+        }
+
+        .results-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .results-boxes {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .result-box {
+            flex: 1;
+            height: 68px;
+            background: rgba(2, 12, 27, 0.8);
+            border: 2px solid rgba(212, 175, 55, 0.25);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .result-box.revealed {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            background: radial-gradient(circle at center, rgba(15, 28, 48, 0.95), rgba(5, 11, 20, 0.95));
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.35), inset 0 2px 6px rgba(0,0,0,0.6);
+            transform: translateY(-3px);
+        }
+
+        .action-container {
+            width: 100%;
+            margin-bottom: 18px;
+        }
+
+        .btn-draw {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            color: #020c1b;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-draw:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn-draw:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            filter: grayscale(40%);
+        }
+
+        .final-message-container {
+            width: 100%;
+            text-align: center;
+            min-height: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .final-message-container.visible {
+            min-height: 140px;
+            max-height: 260px;
+            opacity: 1;
+            margin-bottom: 16px;
+        }
+
+        .congrats-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            color: var(--gold-light);
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .final-numbers-display {
+            font-family: 'Cinzel', serif;
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        .congrats-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            padding: 0 8px;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 12px;
+            margin-top: auto;
+        }
+
+        .footer-info {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            opacity: 0.75;
+        }
+    
+        .draw-result-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+        }
+
+        .draw-result-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .draw-result-card {
+            width: 100%;
+            max-width: 430px;
+            background: linear-gradient(145deg, #10233d, #020c1b);
+            border: 2px solid rgba(212, 175, 55, 0.65);
+            border-radius: 24px;
+            padding: 30px 22px 24px;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.85),
+                        0 0 45px rgba(212,175,55,0.25);
+            transform: scale(0.82) translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .draw-result-overlay.visible .draw-result-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .draw-result-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .draw-result-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.45rem;
+            color: var(--gold-light);
+            margin-bottom: 14px;
+            text-shadow: 0 0 14px rgba(212,175,55,0.45);
+        }
+
+        .draw-result-numbers {
+            font-family: 'Cinzel', serif;
+            font-size: 2.25rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin: 8px 0 18px;
+            text-shadow: 0 0 22px rgba(212,175,55,0.65);
+        }
+
+        .draw-result-text {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 22px;
+        }
+
+        .draw-result-text strong {
+            color: var(--gold-light);
+        }
+
+        .close-result-btn {
+            width: 100%;
+            padding: 14px;
+            border: 0;
+            border-radius: 13px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            color: #020c1b;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .close-result-btn:active {
+            transform: scale(0.97);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1>Rifa Elizabeth</h1>
+            <div class="subtitle">Sorteio Beneficente</div>
+        </header>
+
+        <div class="status-banner">
+            <div id="status-text">Pronto para o Sorteio</div>
+        </div>
+
+        <div class="globe-container" id="globe">
+            <div class="globe-reflection"></div>
+        </div>
+
+        <div class="results-section">
+            <div class="results-label">Números Sorteados</div>
+            <div class="results-boxes">
+                <div class="result-box" id="res-0">—</div>
+                <div class="result-box" id="res-1">—</div>
+                <div class="result-box" id="res-2">—</div>
+            </div>
+        </div>
+
+        <div class="action-container">
+            <button id="draw-btn" class="btn-draw" onclick="startDrawProcess()">🎰 COMEÇAR O SORTEIO</button>
+        </div>
+
+        <div class="final-message-container" id="final-msg">
+            <div class="congrats-title" id="final-title">🎉 SORTEIO CONCLUÍDO!</div>
+            <div class="final-numbers-display" id="final-numbers-span">00 • 00 • 00</div>
+            <div class="congrats-text">
+                🏆 Parabéns aos ganhadores!<br>
+                Muito obrigado a todos que participaram e ajudaram nesta rifa beneficente.
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-info">
+                🔒 Resultado gerado automaticamente pelo navegador.<br>
+                Sorteio realizado de forma aleatória entre os números 01 e 100.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const TOTAL_BALLS = 100;
+        const globe = document.getElementById('globe');
+        const drawBtn = document.getElementById('draw-btn');
+        const statusText = document.getElementById('status-text');
+        const finalMsg = document.getElementById('final-msg');
+        const finalNumbersSpan = document.getElementById('final-numbers-span');
+
+        let ballsData = [];
+        let isDrawing = false;
+        let animationFrameId = null;
+        let currentDrawState = 'idle';
+
+        const resultOverlay = document.getElementById('draw-result-overlay');
+        const modalResultNumbers = document.getElementById('modal-result-numbers');
+
+        function showResultModal(numbers) {
+            const formatted = numbers.map(n => String(n).padStart(2, '0')).join(' • ');
+            modalResultNumbers.textContent = formatted;
+            resultOverlay.classList.add('visible');
+            resultOverlay.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeResultModal() {
+            resultOverlay.classList.remove('visible');
+            resultOverlay.setAttribute('aria-hidden', 'true');
+        }
+
+
+        function initBalls() {
+            globe.querySelectorAll('.ball').forEach(b => b.remove());
+            ballsData = [];
+
+            const globeWidth = 280;
+            const globeHeight = 280;
+            const radius = 112;
+
+            for (let i = 1; i <= TOTAL_BALLS; i++) {
+                const ballEl = document.createElement('div');
+                ballEl.className = 'ball';
+                ballEl.textContent = String(i).padStart(2, '0');
+                globe.appendChild(ballEl);
+
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * radius;
+                const x = globeWidth / 2 + Math.cos(angle) * r - 14;
+                const y = globeHeight / 2 + Math.sin(angle) * r - 14;
+
+                ballEl.style.transform = `translate(${x - (globeWidth/2-14)}px, ${y - (globeHeight/2-14)}px)`;
+
+                ballsData.push({
+                    id: i,
+                    element: ballEl,
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: (Math.random() - 0.5) * 0.8
+                });
+            }
+        }
+
+        function animateIdle() {
+            if (currentDrawState !== 'idle' && currentDrawState !== 'finished') return;
+
+            const centerX = 140 - 14;
+            const centerY = 140 - 14;
+            const maxRadius = 110;
+
+            ballsData.forEach(ball => {
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+
+                const dx = ball.x - centerX;
+                const dy = ball.y - centerY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist > maxRadius) {
+                    ball.vx = -ball.vx + (Math.random() - 0.5) * 0.2;
+                    ball.vy = -ball.vy + (Math.random() - 0.5) * 0.2;
+                }
+
+                ball.element.style.transform = `translate(${ball.x - centerX}px, ${ball.y - centerY}px)`;
+            });
+
+            animationFrameId = requestAnimationFrame(animateIdle);
+        }
+
+        function animateMixing(durationMs, callback) {
+            const startTime = performance.now();
+            const centerX = 140 - 14;
+            const centerY = 140 - 14;
+            const maxRadius = 110;
+
+            function frame(now) {
+                const elapsed = now - startTime;
+
+                ballsData.forEach(ball => {
+                    ball.x += ball.vx * 3.5;
+                    ball.y += ball.vy * 3.5;
+
+                    const dx = ball.x - centerX;
+                    const dy = ball.y - centerY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist > maxRadius || Math.random() < 0.05) {
+                        ball.vx = (Math.random() - 0.5) * 3;
+                        ball.vy = (Math.random() - 0.5) * 3;
+                    }
+
+                    ball.element.style.transform = `translate(${ball.x - centerX}px, ${ball.y - centerY}px)`;
+                });
+
+                if (elapsed < durationMs) {
+                    animationFrameId = requestAnimationFrame(frame);
+                } else {
+                    if (callback) callback();
+                }
+            }
+
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = requestAnimationFrame(frame);
+        }
+
+        function generateWinningNumbers() {
+            const array = new Uint32Array(3);
+            let numbers = [];
+            while (numbers.length < 3) {
+                window.crypto.getRandomValues(array);
+                for (let num of array) {
+                    const val = (num % 100) + 1;
+                    if (!numbers.includes(val) && numbers.length < 3) {
+                        numbers.push(val);
+                    }
+                }
+            }
+            return numbers;
+        }
+
+        async function startDrawProcess() {
+            if (isDrawing) return;
+            isDrawing = true;
+            drawBtn.disabled = true;
+            finalMsg.classList.remove('visible');
+
+            for (let i = 0; i < 3; i++) {
+                const box = document.getElementById(`res-${i}`);
+                box.textContent = '—';
+                box.classList.remove('revealed');
+            }
+            ballsData.forEach(b => b.element.classList.remove('highlighted'));
+
+            currentDrawState = 'counting';
+            statusText.textContent = 'Prepare-se para o sorteio…';
+            await sleep(1500);
+
+            statusText.textContent = '3';
+            await sleep(1500);
+
+            statusText.textContent = '2';
+            await sleep(1500);
+
+            statusText.textContent = '1';
+            await sleep(1500);
+
+            const winningNumbers = generateWinningNumbers();
+
+            currentDrawState = 'mixing';
+            statusText.textContent = 'MISTURANDO OS 100 NÚMEROS…';
+            await new Promise(resolve => animateMixing(4500, resolve));
+
+            currentDrawState = 'drawing1';
+            statusText.textContent = '1º NÚMERO…';
+            await sleep(2000);
+
+            await highlightAndExtractBall(winningNumbers[0], 0);
+            await sleep(3000);
+
+            currentDrawState = 'drawing2';
+            statusText.textContent = 'ATENÇÃO PARA O 2º NÚMERO…';
+
+            animateMixing(2000, () => {});
+            await sleep(2000);
+
+            await highlightAndExtractBall(winningNumbers[1], 1);
+            await sleep(3000);
+
+            currentDrawState = 'drawing3';
+            statusText.textContent = 'ATENÇÃO PARA O ÚLTIMO NÚMERO…';
+
+            animateMixing(2000, () => {});
+            await sleep(2000);
+
+            await highlightAndExtractBall(winningNumbers[2], 2);
+            await sleep(3000);
+
+            currentDrawState = 'finished';
+            statusText.textContent = '🎉 SORTEIO CONCLUÍDO!';
+
+            const formatted0 = String(winningNumbers[0]).padStart(2, '0');
+            const formatted1 = String(winningNumbers[1]).padStart(2, '0');
+            const formatted2 = String(winningNumbers[2]).padStart(2, '0');
+
+            finalNumbersSpan.textContent = `${formatted0} • ${formatted1} • ${formatted2}`;
+            finalMsg.classList.add('visible');
+            showResultModal(winningNumbers);
+
+            drawBtn.textContent = '🔄 NOVO SORTEIO';
+            drawBtn.disabled = false;
+            isDrawing = false;
+        }
+
+        function highlightAndExtractBall(number, boxIndex) {
+            return new Promise(resolve => {
+                const targetBall = ballsData.find(b => b.id === number);
+                if (!targetBall) {
+                    resolve();
+                    return;
+                }
+
+                targetBall.element.classList.add('highlighted');
+
+                const startTime = performance.now();
+                const startX = targetBall.x;
+                const startY = targetBall.y;
+                const targetX = 140 - 14;
+                const targetY = 240 - 14;
+
+                function animateExtraction(now) {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / 1200, 1);
+                    const ease = progress * (2 - progress);
+
+                    targetBall.x = startX + (targetX - startX) * ease;
+                    targetBall.y = startY + (targetY - startY) * ease;
+
+                    const centerX = 140 - 14;
+                    const centerY = 140 - 14;
+                    targetBall.element.style.transform = `translate(${targetBall.x - centerX}px, ${targetBall.y - centerY}px) scale(1.45)`;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateExtraction);
+                    } else {
+                        const box = document.getElementById(`res-${boxIndex}`);
+                        box.textContent = String(number).padStart(2, '0');
+                        box.classList.add('revealed');
+                        resolve();
+                    }
+                }
+
+                requestAnimationFrame(animateExtraction);
+            });
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        window.onload = () => {
+            initBalls();
+            animateIdle();
+        };
+    </script>
+
+    <div class="draw-result-overlay" id="draw-result-overlay" aria-hidden="true">
+        <div class="draw-result-card">
+            <div class="draw-result-icon">🎉</div>
+            <div class="draw-result-title">SORTEIO CONCLUÍDO!</div>
+            <div class="draw-result-numbers" id="modal-result-numbers">00 • 00 • 00</div>
+            <div class="draw-result-text">
+                🏆 <strong>Parabéns aos ganhadores!</strong><br>
+                Muito obrigado a todos que participaram e ajudaram nesta rifa beneficente.
+            </div>
+            <button class="close-result-btn" onclick="closeResultModal()">FECHAR</button>
+        </div>
+    </div>
+
+</body>
+</html>
